@@ -1,5 +1,5 @@
 # '샐 틈 없는' 자산관리의 시작, My One HANA
-[프로젝트 홈페이지 - https://uijeongg.github.io/One-Hana/](https://uijeongg.github.io/One-Hana/)
+[프로젝트 홈페이지 - https://uijeongg.github.io/One-Hana/](https://uijeongg.github.io/One-Hana/)<br><br>
 <img src="logo4.png"/><br><br><br><br>
 
 # 1. 프로젝트 개요
@@ -46,7 +46,7 @@
 <br><br>
 
 # 2. 프로젝트 제안서
-[제안서PPT<img src="erd.JPG"/>](/MyOneHANA_제안서.pdf)<br>
+[제안서PPT<img src="제안서.jpg"/>](/MyOneHANA_제안서.pdf)<br>
 
 <br> <br> 
 

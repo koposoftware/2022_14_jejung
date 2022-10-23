@@ -16,22 +16,22 @@
 
 ###  * 통장 쪼개기 : 급여통장을 목적에 맞게 여러 개로 나누어 활용하는 재테크 방법<br><br>
 
-<img src="종합.jpg"/><br><br>
+<img src="종합.jpg"/><br><br><br>
 
 ## 1-2. 프로젝트 기대효과
-<img src="기대효과.jpg"/><br><br>
+<img src="기대효과.jpg"/><br><br><br>
 
 
 ## 1-3. 프로젝트 개발환경
-• OS : Windows10
-• Server : Apache2, Tomcat 9
-• Framework : Spring, MyBatis
-
+#### • OS : Windows10<br>
+#### • Server : Apache2, Tomcat 9<br>
+#### • Framework : Spring, MyBatis<br>
+<br><br>
 ## 1-4. Language / Tool / DataBase / VCS
-• Language : Java, JavaScript, jQuery, PL/SQL, HTML, CSS 
-• Tool : Eclipse, SQLDEV
-• DataBase : Oracle 19c
-• VCS : Github
+#### • Language : Java, JavaScript, jQuery, PL/SQL, HTML, CSS <br>
+#### • Tool : Eclipse, SQLDEV<br>
+#### • DataBase : Oracle 19c<br>
+#### • VCS : Github<br>
 
 
 

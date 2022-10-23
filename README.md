@@ -1,5 +1,5 @@
 # '샐 틈 없는' 자산관리의 시작, My One HANA
-<img src="mylogo1.png"/><br>
+<img src="logo4.png"/><br>
 [프로젝트 홈페이지 - https://uijeongg.github.io/One-Hana/](https://uijeongg.github.io/One-Hana/)
 
 # 1. 프로젝트 개요
@@ -15,6 +15,8 @@
 ### 또한, 거기에 소비 패턴 분석과 금융 상품 제시까지 더하여 하나의 플랫폼 안에서 자산관리에 대한 모든 것을 해결할 수 있도록 '종합 자산 관리 서비스'인 My One HANA를 기획하게 되었다.
 
 ###  * 통장 쪼개기 : 급여통장을 목적에 맞게 여러 개로 나누어 활용하는 재테크 방법
+
+<img src="종합.jpg"/><br>
 
 ## 1-2. 프로젝트 기대효과
 <img src="기대효과.jpg"/><br>

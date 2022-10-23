@@ -23,15 +23,15 @@
 
 
 ## 1-3. 프로젝트 개발환경
-#### • OS : Windows10<br>
-#### • Server : Apache2, Tomcat 9<br>
-#### • Framework : Spring, MyBatis
+### • OS : Windows10<br>
+### • Server : Apache2, Tomcat 9<br>
+### • Framework : Spring, MyBatis
 <br><br>
 ## 1-4. Language / Tool / DataBase / VCS
-#### • Language : Java, JavaScript, jQuery, PL/SQL, HTML, CSS <br>
-#### • Tool : Eclipse, SQLDEV<br>
-#### • DataBase : Oracle 19c<br>
-#### • VCS : Github<br><br><br>
+### • Language : Java, JavaScript, jQuery, PL/SQL, HTML, CSS <br>
+### • Tool : Eclipse, SQLDEV<br>
+### • DataBase : Oracle 19c<br>
+### • VCS : Github<br><br><br>
 
 
 
@@ -60,11 +60,11 @@
 
 
 ## 3-3. 적용기술
-#### • Spring MMC 기반 웹 어플리케이션 제작
-#### • Ajax 비동기 통신을 활용하여 화면 갱신
-#### • Oracle Procedure를 사용하여 통장 쪼개기, 자동 잔액 이동 기능 구현
-#### • Highcharts를 사용하여 소비 패턴에 대해 Dropdown이 가능한 그래프로 시각화
-#### • Apex Chart를 사용하여 소비 패턴과 파킹 내역 시각화
+### • Spring MMC 기반 웹 어플리케이션 제작
+### • Ajax 비동기 통신을 활용하여 화면 갱신
+### • Oracle Procedure를 사용하여 통장 쪼개기, 자동 잔액 이동 기능 구현
+### • Highcharts를 사용하여 소비 패턴에 대해 Dropdown이 가능한 그래프로 시각화
+### • Apex Chart를 사용하여 소비 패턴과 파킹 내역 시각화
 ### • Spring Scheduler를 사용하여 설정 날짜에 따라 서비스가 자동으로 제공되도록 구현
 ### • CoolSMS를 통해 소비 경보 알림 제공
 <br><br><br>

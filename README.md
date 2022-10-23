@@ -52,17 +52,30 @@
 
 
 # 3. 프로젝트 결과
+
+## 3-1. 핵심기능
+
+
+## 3-2. ERD
+
+
+## 3-3. 적용기술
+
+
    
-## 3-1. 발표 ppt 
+   
+   
+   
+# 4. 발표 PPT
 [발표자료<img src="피피티메인.jpg"/>](/project.pptx)<br>
 
-## 3-2. 시연 동영상 
+# 5. 시연 동영상 
 
   <iframe width="424" height="238" src="https://www.youtube.com/embed/reOGfxYJre0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <br><br><br>
  
-# 4. 본인 소개
+# 6. 본인 소개
 
 
 |이름 |정의정|![itisme](/itisme.jpg)|

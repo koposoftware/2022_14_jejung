@@ -4,7 +4,7 @@
 
 # 1. 프로젝트 개요
 
-## 1-1. 프로젝트 선정 배경
+## 1-1. 프로젝트 선정 배경 및 목적
 <img src="배경.jpg"/><br>
 #### 이전 세대에서 ‘자산관리’라는 단어는 다수의 일반인들에게는 익숙하지 않은 단어였다. 하지만 우리 사회에서는 평균수명의 연장과 삶의 질 향상으로 인해 더욱 안정적이고 풍요로운 미래를 구축하고자 하는 사람들의 니즈가 점점 증가하고 있다. 거기에 포스트 코로나까지 더해져서, 자산관리에 대한 관심이 전방위적으로 증가하고 있다. 그에 따라 자산관리가 부자들의 전유물이라는 인식은 옛 것이 된지 오래다.
 
@@ -14,16 +14,22 @@
 
 ###  * 통장 쪼개기 : 급여통장을 목적에 맞게 여러 개로 나누어 활용하는 재테크 방법
 
+## 1-2. 프로젝트 기대효과
+<img src="기대효과.jpg"/><br>
+
+
+## 1-3. 프로젝트 개발환경
+
+
+## 1-4. 프로젝트 수행기간
+
 
 
 <br>
 
 # 2. 프로젝트 제안서
-
-프로젝트 제안서를 설명하세요. 발표자료와 동영상을 추가하세요. 시스템의 아키텍쳐 설명도 추가하세요.
-
- 
 [제안서PPT<img src="erd.JPG"/>](/MyOneHANA_제안서.pdf)<br>
+
 <br> <br> 
   <iframe width="424" height="238" src="https://www.youtube.com/embed/reOGfxYJre0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 

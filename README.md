@@ -55,10 +55,10 @@
 # 3. 프로젝트 결과
 
 ## 3-1. 핵심기능
-<img src="기능1.png"/><br>
-<img src="기능2.png"/><br>
-<img src="기능3.png"/><br>
-<img src="기능4.png"/><br><br>
+<img src="기능1.jpg"/><br>
+<img src="기능2.jpg"/><br>
+<img src="기능3.jpg"/><br>
+<img src="기능4.jpg"/><br><br>
 
 ## 3-2. ERD
 

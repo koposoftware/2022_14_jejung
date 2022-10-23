@@ -60,12 +60,10 @@
 
 
 ## 3-3. 적용기술
+<img src="기술.jpg"/><br><br>
 
-
    
-   
-   
-   
+  
 # 4. 발표 PPT
 [발표자료<img src="피피티메인.jpg"/>](/project.pptx)<br>
 

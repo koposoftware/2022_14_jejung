@@ -25,7 +25,7 @@
 ## 1-3. 프로젝트 개발환경
 #### • OS : Windows10<br>
 #### • Server : Apache2, Tomcat 9<br>
-#### • Framework : Spring, MyBatis<br>
+#### • Framework : Spring, MyBatis
 <br><br>
 ## 1-4. Language / Tool / DataBase / VCS
 #### • Language : Java, JavaScript, jQuery, PL/SQL, HTML, CSS <br>

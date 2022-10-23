@@ -23,17 +23,27 @@
 
 
 ## 1-3. 프로젝트 개발환경
+• OS : Windows10
+• Server : Apache2, Tomcat 9
+• Framework : Spring, MyBatis
+
+## 1-4. Language / Tool / DataBase / VCS
+• Language : Java, JavaScript, jQuery, PL/SQL, HTML, CSS 
+• Tool : Eclipse, SQLDEV
+• DataBase : Oracle 19c
+• VCS : Github
 
 
-## 1-4. 시스템 아키텍처
+
+## 1-5. 시스템 아키텍처
 <img src="시스템아키텍처.jpg"/><br><br>
 
 
-## 1-5. 프로젝트 수행기간
-<img src="간.jpg"/><br><br>
+## 1-6. 프로젝트 수행기간
+<img src="간트.jpg"/><br><br>
 
 
-<br>
+<br><br>
 
 # 2. 프로젝트 제안서
 [제안서PPT<img src="erd.JPG"/>](/MyOneHANA_제안서.pdf)<br>

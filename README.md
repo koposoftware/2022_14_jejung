@@ -14,7 +14,7 @@
 
 #### 또한, 거기에 소비 패턴 분석과 금융 상품 제시까지 더하여 하나의 플랫폼 안에서 자산관리에 대한 모든 것을 해결할 수 있도록 '종합 자산 관리 서비스'인 My One HANA를 기획하게 되었다.
 
-###  * 통장 쪼개기 : 급여통장을 목적에 맞게 여러 개로 나누어 활용하는 재테크 방법<br?
+###  * 통장 쪼개기 : 급여통장을 목적에 맞게 여러 개로 나누어 활용하는 재테크 방법<br>
 
 <img src="종합.jpg"/><br><br>
 
@@ -30,7 +30,7 @@
 
 
 ## 1-5. 프로젝트 수행기간
-<img src="간트차트.png"/><br><br>
+<img src="간.jpg"/><br><br>
 
 
 <br>
@@ -39,11 +39,11 @@
 [제안서PPT<img src="erd.JPG"/>](/MyOneHANA_제안서.pdf)<br>
 
 <br> <br> 
-  <iframe width="424" height="238" src="https://www.youtube.com/embed/reOGfxYJre0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 
 # 3. 프로젝트 결과
 프로젝트 결과를 추가하세요. 발표자료. 시연동영상을 추가하세요.
-   <img src="architecture.png"/><br>
+   <img src="ppt메인.png"/><br>
    
    <img src="erd.JPG"/><br>
 ## 발표 ppt 

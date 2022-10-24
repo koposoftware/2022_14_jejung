@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="divide.DivideDAO">
+
+    <!-- 프로시저 호출만  -->
+	<select id="getDivList" statementType="CALLABLE" parameterType="map">
+	        { CALL DIVIDE_PROCESS_PROC(
+	            #{divAmount},
+	            #{fromPocket},
+	            #{toPocket}
+	            )
+	        }
+	</select>
+
+    <select id="selectDivList" resultType="kr.ac.kopo.divide.DivideVO" parameterType="map">
+        select * from T_DIV_HISTORY 
+        where divAmount = #{divAmount} and fromPocket = #{fromPocket} and toPocket = #{toPocket}    
+    </select>
+
+</mapper>

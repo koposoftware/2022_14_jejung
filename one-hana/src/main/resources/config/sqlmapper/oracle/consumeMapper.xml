@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="consume.ConsumeDAO">
+ 
+
+    <!-- 캘린더에 들어갈 일 단위 데이터 불러오기 -->
+    <select id="getConsumeData" resultType="map" parameterType="string">    
+        SELECT A.CATECODE,B.CONDATE,B.CONNAME,B.CONAMOUNT
+        FROM T_CONSUME_CATEGORY A, T_CONSUME_HISTORY B
+        WHERE A.CATECODE = B.CATECODE AND B.ID = #{id}
+    </select>
+    
+    <!-- 9(당월)월의 총 소비액 -->
+    <select id="getMonthConsumeData" resultType="map" parameterType="map">
+        SELECT SUM(conAmount) AS MONTHSUM, SUBSTR(condate,1,7) AS CURRENT_MONTH FROM T_CONSUME_HISTORY 
+        WHERE TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${month}) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${month})) 
+        AND POCKETCODE=3 AND ID=#{id}
+        GROUP BY SUBSTR(condate,1,7)   
+    </select>
+    
+    <!-- 9(당월)월의 소비액 추이 -->
+    <select id="getSixMonthConsumeData" resultType="map" parameterType="map">
+        SELECT conAmount, ROUND(TO_NUMBER(TO_DATE(CONDATE,'yyyy-MM-dd hh24:mi:ss')-TO_DATE('01-01-1970 00:00:00', 'DD-MM-YYYY HH24:MI:SS'))*24*60*60*1000) AS CONDATE FROM T_CONSUME_HISTORY 
+        WHERE TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthStart}) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthEnd})) 
+        AND POCKETCODE=3 AND ID=#{id} ORDER BY CONDATE DESC
+    </select>
+    
+    
+    <select id="getDayConsume" resultType="map" parameterType="map">
+        SELECT SUBSTR(CONDATE,0,10) AS CONDATE,SUM(B.CONAMOUNT) AS CONAMOUNT
+        FROM T_CONSUME_CATEGORY A, T_CONSUME_HISTORY B
+        WHERE (TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'),${monthStart}) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthEnd}))) 
+               AND A.CATECODE = B.CATECODE AND B.ID=#{id} AND POCKETCODE=3
+               GROUP BY SUBSTR(CONDATE,0,10)
+               order by CONDATE ASC
+                      
+    </select>
+    
+    
+    <select id="getDayConsume2" resultType="map" parameterType="map">
+        <!-- SELECT TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS'),'DAY') AS DAY, COUNT(*) COUNT, SUM(CONAMOUNT) SUM
+        FROM T_CONSUME_HISTORY 
+        WHERE TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthStart}) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthEnd})) 
+        GROUP BY TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS'),'DAY') -->
+        
+        SELECT SUM(CONAMOUNT) AS SUM
+       ,DECODE(TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS')-1,'D'), '1', '월요일', '2', '화요일', '3', '수요일' ,'4', '목요일', '5', '금요일', '6', '토요일', '7', '일요일') AS DAY
+        FROM T_CONSUME_HISTORY 
+        WHERE ID=#{id} AND POCKETCODE=3
+              AND TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'),${monthStart}) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthEnd})) 
+        GROUP BY TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS')-1,'D')
+        ORDER BY TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS')-1,'D') 
+    </select>
+    
+    <select id="getDateTop" resultType="map" parameterType="map">
+       SELECT TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS'),'DD') AS DAY,
+              SUM(CONAMOUNT) AS AMOUNT_SUM,
+              RANK() OVER (ORDER BY  SUM(CONAMOUNT) DESC) RANK
+       FROM T_CONSUME_HISTORY 
+       where ID=#{id} AND POCKETCODE=3
+             AND TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthStart}) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthEnd})) 
+       GROUP BY TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS'),'DD')
+    </select>
+    
+    
+    <select id="getCateAmount" resultType="map" parameterType="map">
+       SELECT B.CATENAME1 AS CATE1, COUNT(B.CATENAME1) AS COUNT, sum(A.conamount) as AMOUNT
+       FROM T_CONSUME_HISTORY A, T_CONSUME_CATEGORY B
+       WHERE A.CATECODE=B.CATECODE AND ID=#{id} AND POCKETCODE=3
+             AND TO_DATE(A.CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthStart}) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthEnd})) 
+      GROUP BY B.CATENAME1   
+    </select>
+    
+        
+    <select id="getCate3Data" resultType="map" parameterType="map">  
+        SELECT B.CATENAME1 AS CATE2, B.CATENAME3 AS CATE3, COUNT(B.CATENAME1) AS COUNT, sum(A.conamount) as AMOUNT
+        FROM T_CONSUME_HISTORY A, T_CONSUME_CATEGORY B
+        WHERE A.CATECODE=B.CATECODE AND ID=#{id} AND POCKETCODE=3
+              AND TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthStart}) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthEnd}))
+        GROUP BY B.CATENAME1, B.CATENAME3
+    </select>
+    
+    
+    <select id="getCate3Count" resultType="map" parameterType="map">
+        SELECT B.CATENAME2 AS cate2, B.CATENAME3 AS cate3, COUNT(B.CATENAME3) AS cate3count, sum(A.conamount) as conamount1
+        FROM T_CONSUME_HISTORY A, T_CONSUME_CATEGORY B
+        WHERE A.CATECODE=B.CATECODE AND ID=#{id} AND POCKETCODE=3
+              AND TO_DATE(A.CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthStart}) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthEnd})) 
+        GROUP BY B.CATENAME3, B.CATENAME2
+        ORDER BY cate3count DESC
+    </select>
+    
+    
+    <select id="getDateTopList" resultType="map" parameterType="map">
+        SELECT CONNAME, CONAMOUNT, DAY, TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS'),'HH24:MI') AS TIME
+        FROM T_CONSUME_HISTORY A, 
+             (SELECT TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS'),'DD') AS DAY, RANK() OVER (ORDER BY  SUM(CONAMOUNT) DESC) RANK
+              FROM T_Consume_History
+              WHERE TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthStart}) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthEnd}))
+              GROUP BY TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS'),'DD')
+              ORDER BY rank) B 
+        WHERE TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthStart}) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthEnd}))
+              AND SUBSTR(A.CONDATE,9,2)=B.DAY AND ID=#{id} AND POCKETCODE=3
+        ORDER BY B.RANK
+    </select>
+    
+    <select id="getSixAmountData" resultType="map" parameterType="map">
+        SELECT TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS'),'MM') AS MONTH, SUM(CONAMOUNT) AS SUM
+        FROM T_CONSUME_HISTORY
+        WHERE ID=#{id} AND POCKETCODE=3
+              AND TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthStart}) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthEnd}))
+        GROUP BY TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS'),'MM')
+        ORDER BY MONTH ASC
+    </select>
+    
+        
+    <select id="getTimesData" resultType="map" parameterType="map">
+        <!-- SELECT SUBSTR(LPAD(SUBSTR(CONDATE,12,15),5,'0'),0,2) AS TIMES, SUM(CONAMOUNT) AS AMOUNT, COUNT(*) AS COUNT
+        FROM T_CONSUME_HISTORY 
+        WHERE ID=#{id} AND TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthStart}) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthEnd}))
+        GROUP BY SUBSTR(LPAD(SUBSTR(CONDATE,12,15),5,'0'),0,2) ORDER BY TIMES -->
+        
+        SELECT A.CONDATE, A.CONAMOUNT, B.CATENAME3
+        FROM T_CONSUME_HISTORY A, T_CONSUME_CATEGORY B
+        WHERE A.CATECODE=B.CATECODE AND ID=#{id} AND POCKETCODE=3
+              AND TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthStart}) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthEnd}))
+    </select>
+    
+    <select id="getTopCountData" resultType="map" parameterType="map">
+        SELECT B.CATENAME3 AS cate3, COUNT(B.CATENAME3) AS CATE3COUNT, sum(A.conamount) as CATE3AMOUNT
+        FROM T_CONSUME_HISTORY A, T_CONSUME_CATEGORY B
+        WHERE A.CATECODE=B.CATECODE AND ID=#{id} AND POCKETCODE=3
+              AND TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'),${monthStart}) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthEnd}))
+        GROUP BY B.CATENAME3 ORDER BY CATE3COUNT DESC
+    </select>
+    
+    <select id="getCountMedianData" resultType="map" parameterType="map">
+        SELECT COUNT(B.CATENAME3) AS COUNT, TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS'),'MM') AS MONTH, SUM(A.CONAMOUNT) AS SUM
+        FROM T_CONSUME_HISTORY A, T_CONSUME_CATEGORY B, 
+            (SELECT a.CATENAME3  AS CATENAME3    
+                FROM (SELECT COUNT(B.CATENAME3) AS COUNT, B.CATENAME3
+                FROM T_CONSUME_HISTORY A, T_CONSUME_CATEGORY B
+                WHERE A.CATECODE=B.CATECODE AND ID=#{id} AND POCKETCODE=3
+                AND TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'),${monthStart}) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthEnd}))
+                GROUP BY B.CATENAME3 ORDER BY COUNT DESC) a WHERE <![CDATA[ROWNUM<=1]]>) C
+        WHERE A.CATECODE=B.CATECODE AND ID=#{id}
+              AND TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'),${monthStart}) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthEnd}))
+              AND B.CATENAME3=C.CATENAME3 AND POCKETCODE=3
+        GROUP BY TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS'),'MM') ORDER BY COUNT
+    </select>
+    
+    
+    <select id="getTop2Data" resultType="map" parameterType="map">
+        SELECT COUNT(B.CATENAME3) AS COUNT, sum(a.conamount) AS AMOUNT, B.CATENAME3 AS CATENAME3
+        FROM T_CONSUME_HISTORY A, T_CONSUME_CATEGORY B
+        WHERE A.CATECODE=B.CATECODE AND ID= #{id}
+              AND TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'),${monthStart}) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthEnd}))
+              AND B.CATENAME3='${cate3Name}' AND POCKETCODE=3
+        GROUP BY TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS'),'MM'), B.CATENAME3
+    </select>
+    
+    
+    <select id="getSumMedianData" resultType="map" parameterType="map">
+        SELECT TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS'),'MM') AS MONTH, SUM(A.CONAMOUNT) AS SUM, COUNT(B.CATENAME3) AS CATENAME3
+        FROM T_CONSUME_HISTORY A, T_CONSUME_CATEGORY B, 
+             (SELECT a.CATENAME3  AS CATENAME3    
+             FROM (SELECT SUM(A.CONAMOUNT) AS SUM, B.CATENAME3
+             FROM T_CONSUME_HISTORY A, T_CONSUME_CATEGORY B
+             WHERE A.CATECODE=B.CATECODE AND ID= #{id}
+                   AND TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'),${monthStart}) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthEnd}))
+             GROUP BY B.CATENAME3 ORDER BY SUM DESC) a WHERE <![CDATA[ROWNUM<=1]]>) C
+        WHERE A.CATECODE=B.CATECODE AND ID= #{id}
+              AND TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'),${monthStart}) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), ${monthEnd}))
+              AND B.CATENAME3=C.CATENAME3 AND POCKETCODE=3
+        GROUP BY TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS'),'MM') ORDER BY SUM DESC
+    </select>
+  
+     <select id="doAutoSms" statementType="CALLABLE" parameterType="map">
+        { CALL AUTO_SMS_PROCESS_PROC(
+                #{accountNo},
+                #{autoSmsDate}
+                )
+         }
+    </select>   
+    
+    <insert id="insertNoticeSet" parameterType="map">
+        
+    
+    </insert>
+    
+  
+</mapper>

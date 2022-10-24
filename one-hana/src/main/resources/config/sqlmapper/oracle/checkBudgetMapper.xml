@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="checkBudget.CheckBudgetDAO">
+
+
+	<select id="getBudgetSettingAmount" resultType="map" parameterType="string">
+	    SELECT A.TOPOCKETCODE, A.AUTODIVAMOUNT, B.POCKETNAME
+	    FROM T_AUTO_DIVIDE_SETTING A, T_MYONE_POCKET B
+	    WHERE A.ACCOUNTNO = B.ACCOUNTNO AND A.ACCOUNTNO=#{accountNo} AND A.TOPOCKETCODE=B.POCKETCODE
+	</select>
+
+    <select id="getMonthConsumeList" resultType="map" parameterType="String">
+        SELECT TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS'),'MM') AS MONTH, SUM(CONAMOUNT) AS AMOUNT
+        FROM t_consume_history 
+        WHERE ID=#{id} AND POCKETCODE=3
+              AND TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'),-6) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), -1))
+        GROUP BY TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS'),'MM')
+        ORDER BY MONTH ASC
+    </select>
+
+    <select id="getMonthConsumeList2" resultType="map" parameterType="String">
+        SELECT TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS'),'MM') AS MONTH, SUM(CONAMOUNT) AS AMOUNT
+        FROM t_consume_history 
+        WHERE ID=#{id} AND POCKETCODE=2
+              AND TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'),-6) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), -1))
+        GROUP BY TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS'),'MM') 
+        ORDER BY MONTH ASC
+    </select>
+
+
+    <select id="getConsumeNameList" resultType="map" parameterType="String">
+        SELECT TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS'),'MM') AS MONTH, SUM(CONAMOUNT) AS AMOUNT, CONNAME
+        FROM t_consume_history 
+        WHERE ID=#{id} AND POCKETCODE=2
+              AND TO_DATE(CONDATE,'YYYY-MM-DD HH24:MI:SS') BETWEEN ADD_MONTHS(TRUNC(SYSDATE, 'MM'),-6) AND LAST_DAY(ADD_MONTHS(TRUNC(SYSDATE, 'MM'), -1))
+        GROUP BY TO_CHAR(TO_DATE(CONDATE, 'YYYY-MM-DD HH24:MI:SS'),'MM'), CONNAME
+        ORDER BY MONTH ASC
+    </select>
+
+
+    <select id="getReBudgetPocketList" resultType="map" parameterType="map">
+        SELECT POCKETCODE, POCKETNAME FROM T_MYONE_POCKET WHERE ID=#{id} AND ACCOUNTNO=#{accountNo}
+    </select>
+    
+    <update id="updateReBudgetSet" parameterType="map">
+        UPDATE T_AUTO_DIVIDE_SETTING SET AUTODIVAMOUNT=#{divAmount}, AUTODIVDATE=#{autoDivDate}
+        WHERE ACCOUNTNO=#{accountNo} AND TOPOCKETCODE=(SELECT POCKETCODE FROM T_MYONE_POCKET where pocketName=#{toPocket} and ACCOUNTNO=#{accountNo})
+    </update>
+    
+    <select id="selectChangeModal" resultType="map" parameterType="map">
+        SELECT B.pocketName AS POCKETNAME, A.autodivamount AS AUTODIVAMOUNT, A.autodivdate AS AUTODIVDATE
+        FROM T_AUTO_DIVIDE_SETTING A, (select pocketName from T_MYONE_POCKET where POCKETNAME = #{toPocket} and accountNo=#{accountNo}) B
+        where A.accountNo=#{accountNo}  
+              AND A.TOPOCKETCODE=(select POCKETCODE from T_MYONE_POCKET where POCKETNAME =#{toPocket} and accountNo=#{accountNo})
+    </select>
+    
+</mapper>

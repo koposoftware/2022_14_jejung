@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="budget.BudgetDAO">
+
+    <!-- 월급, 월급일 insert -->
+    <update id="updateIncome" parameterType="map">
+        update T_MYONE set income=#{income}, incomeDate=#{incomeDate} ,parkingDate=#{incomeDate}
+        where accountNo=#{accountNo}
+    </update>
+   
+    <select id="getIncomeData" resultType="kr.ac.kopo.myBank.MyBankVO" parameterType="String">
+        select * from T_MYONE where accountNo=#{accountNo}
+    </select>
+   
+ 
+    <insert id="insertFixed" parameterType="map">
+        <!-- insert into T_FIXED_COST(accountNo, pocketCode, fixedName, fixedCost, fixedDate) 
+        values(#{accountNo}, 2, #{fixedName}, #{fixedCost}, #{fixedDate}) -->
+        insert into T_FIXED_COST(accountNo, pocketCode, fixedName, fixedCost) 
+        values(#{accountNo}, 2, #{fixedName}, #{fixedCost})
+    </insert>
+    
+    <select id="getFixedData" resultType="kr.ac.kopo.budget.FixedVO" parameterType="map">
+        select * from T_FIXED_COST where accountNo=#{accountNo} and fixedName=#{fixedName}
+    </select>
+    
+    <select id="getFixedSum" resultType="hashmap" parameterType="string">
+        select accountNo, sum(fixedCost) as fixedSum from T_FIXED_COST group by accountNo having accountNo=#{accountNo}
+    </select>
+   
+    
+    <select id="getCalculation" resultType="hashmap" parameterType="string">
+        select (income - b.fixedSum) as myAsset
+        from t_myone a, (select accountNo, sum(fixedCost) as fixedSum from T_FIXED_COST group by accountNo) b
+        where a.accountNo=b.accountNo and a.accountNo = #{accountNo}
+    
+    </select>
+    
+    
+    <!-- divDate는 default값인 sysdate로 들어가는 잔액 분할 프로시저 -->
+    <select id="insertAutoDiv" statementType="CALLABLE" parameterType="map">
+        { CALL AUTO_DIVIDE_PROCESS_PROC(
+                #{accountNo},
+                #{divAmount},
+                #{pocketCode},
+                #{autoDivDate}
+                )
+         }
+    </select>
+    
+    
+    <select  id="selectDivList" resultType="kr.ac.kopo.budget.AutoDivideVO" parameterType="map">
+        select a.autoDivAmount, a.autoDivDate, b.pocketName, a.fromPocket, a.toPocket
+        from T_AUTO_DIVIDE a, 
+             (select pocketName from T_MYONE_POCKET where pocketCode = #{pocketCode} and accountNo=#{accountNo}) b 
+        where a.autoDivAmount =#{divAmount} and autoDivDate = #{autoDivDate} and a.fromPocket='기본'
+        
+       <!--  select a.autoDivAmount, a.autoDivDate, b.pocketName, a.fromPocket, a.toPocket
+        from T_AUTO_DIVIDE_SETTING a, 
+             (select pocketName from T_MYONE_POCKET where pocketCode = #{pocketCode} and accountNo=#{accountNo}) b 
+        where a.autoDivAmount =#{divAmount} and autoDivDate = #{autoDivDate}
+     -->
+    </select>
+    
+    
+    <update id="updateParkingGoal" parameterType="map">
+        update T_MYONE set parkingLimit=#{parkingGoal} where accountNo=#{accountNo}  
+    </update>
+    
+    
+    <select id="getParkingData" resultType="kr.ac.kopo.myBank.MyBankVO" parameterType="String">
+        select parkingLimit from T_MYONE where accountNo=#{accountNo}
+    </select>
+
+
+    <select id="selectOneList" resultType="kr.ac.kopo.myBank.MyBankVO">
+        select * from T_MYONE where parkingDate=1
+    </select>
+    
+   
+   
+     <select id="doAutoParking" statementType="CALLABLE" parameterType="kr.ac.kopo.myBank.MyBankVO">
+        { CALL AUTO_PARKING_PROCESS_PROC(
+                #{accountNo},
+                #{parkingDate}
+                )
+            }
+    </select>
+    
+    
+    <insert id="insertAutoDivSetting" parameterType="map">
+        INSERT INTO T_AUTO_DIVIDE_SETTING (accountNo, toPocketCode, autoDivAmount, autoDivDate) 
+        VALUES(#{accountNo}, #{pocketCode}, #{divAmount},#{autoDivDate})
+    </insert>
+    
+    <!-- 생활비예산 업데이트 -->
+    <update id="updateReBudgetSet" parameterType="map">
+        UPDATE T_AUTO_DIVIDE_SETTING 
+        SET AUTODIVAMOUNT=(SELECT AUTODIVAMOUNT FROM T_AUTO_DIVIDE_SETTING WHERE ACCOUNTNO=#{accountNo} AND TOPOCKETCODE=3) - #{autoDivAmount}
+        WHERE ACCOUNTNO=#{accountNo} AND TOPOCKETCODE=3
+    </update>
+    
+</mapper>

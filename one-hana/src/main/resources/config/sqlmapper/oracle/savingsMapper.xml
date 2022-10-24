@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="savings.SavingsDAO">
+
+    <select id="selectSavingsList" resultType="map" parameterType="map">
+        
+        SELECT A.SAVINGSNAME, A.TARGET, A.REGISTDATE, A.MAXLIMIT, A.MINPERIOD, A.MAXPERIOD, A.MINAMOUNT, A.MAXAMOUNT, A.PRODUCTDESC, A.ACCUMULATEMETHOD, B.BASICRATE, B.MAXRATE, C.PREFERRATE, C.CONDITION1, C.CONDITION2, A.STATUS
+        FROM T_SAVINGS_LIST A, T_RATE B, T_PREFERENTIAL_RATE C
+        WHERE A.SAVINGSNAME=B.SAVINGSNAME AND A.SAVINGSNAME=C.SAVINGSNAME
+              AND A.TYPE=#{productType} AND A.accumulateMethod=#{accumulateMethod} AND A.minPeriod=#{minPeriod}
+              AND C.CONDITION1=#{preferCondition2} AND C.CONDITION2=#{preferCondition1}
+              AND <![CDATA[A.MINAMOUNT <= #{firstAmount}]]> AND <![CDATA[A.MAXAMOUNT >= #{firstAmount}]]>
+        ORDER BY A.REGISTDATE DESC     
+    </select>
+    
+ 
+    <select id="selectCompareList" resultType="map" parameterType="List">
+        SELECT A.SAVINGSNAME, A.TARGET, A.MAXLIMIT, A.MINPERIOD, A.MAXPERIOD, A.MINAMOUNT, A.MAXAMOUNT, A.PRODUCTDESC, A.ACCUMULATEMETHOD, B.BASICRATE, B.MAXRATE, C.PREFERRATE, C.CONDITION1, C.CONDITION2, A.SAVINGSTYPE, A.STATUS
+        FROM T_SAVINGS_LIST A, T_RATE B, T_PREFERENTIAL_RATE C
+        WHERE A.SAVINGSNAME=B.SAVINGSNAME AND A.SAVINGSNAME=C.SAVINGSNAME
+              AND A.SAVINGSNAME in (<foreach collection="list" item="checkVal" separator="," > #{checkVal} </foreach>  )
+        ORDER BY C.PREFERRATE DESC 
+    </select>
+
+
+  <!--   <select id="selectExpectedList" resultType="map" parameterType="List">
+        SELECT A.SAVINGSNAME, A.MAXLIMIT, A.MINPERIOD, A.MAXPERIOD, A.MINAMOUNT, A.MAXAMOUNT, B.BASICRATE, B.MAXRATE, C.PREFERRATE, C.CONDITION1, C.CONDITION2
+        FROM T_SAVINGS_LIST A, T_RATE B, T_PREFERENTIAL_RATE C
+        WHERE A.SAVINGSNAME=B.SAVINGSNAME AND A.SAVINGSNAME=C.SAVINGSNAME
+              AND A.SAVINGSNAME in (<foreach collection="list" item="checkVal" separator="," > #{checkVal} </foreach>  )
+        ORDER BY C.PREFERRATE DESC 
+    </select>
+ -->
+
+</mapper>

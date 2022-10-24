@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin.AdminDAO">
+
+   <select id="selectProductList" resultType="kr.ac.kopo.savings.SavingsVO">
+        SELECT SAVINGSNAME, TYPE, TARGET, MAXLIMIT, MINPERIOD, MAXPERIOD, MINAMOUNT, MAXAMOUNT, 
+               ACCUMULATEMETHOD, PRODUCTDESC, TO_CHAR(REGISTDATE,'YYYY/MM/DD') AS REGISTDATE, SAVINGSTYPE, PRODUCTCODE, STATUS    
+        FROM T_SAVINGS_LIST ORDER BY REGISTDATE DESC
+   </select>
+
+    
+   <insert id="insertProduct" parameterType="kr.ac.kopo.savings.SavingsVO">
+       INSERT INTO T_SAVINGS_LIST(SAVINGSNAME, TYPE, TARGET, MAXLIMIT, MINPERIOD, MAXPERIOD, MINAMOUNT, MAXAMOUNT, ACCUMULATEMETHOD, PRODUCTDESC, SAVINGSTYPE) 
+       VALUES(#{savingsName}, #{type}, #{target}, #{maxLimit}, #{minPeriod}, #{maxPeriod}, #{minAmount}, #{maxAmount}, #{accumulateMethod}, #{productDesc}, #{savingsType})
+   
+   </insert>
+
+</mapper>

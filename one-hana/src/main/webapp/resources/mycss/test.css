@@ -1,0 +1,45 @@
+@charset "UTF-8";
+@font-face{
+    src : url("/resources/font/HanaB.ttf");
+    font-family:"hanaBFont";
+}
+@font-face{
+    src : url("/resources/font/Pretendard-ExtraBold.otf");
+    font-family:"Pretendard-ExtraBold";
+}
+
+body{
+   font-family:"hanaBFont" !important;	
+   color:black;
+}
+p{
+	font-family:"hanaBFont" !important;   
+    /* color:black !important;	 */
+}
+div{
+	font-family:"hanaBFont" !important;   
+  /*   color:black; */	
+}
+span{
+	font-family:"hanaBFont" !important;    
+    color:black;
+	
+}
+
+h2, h3, h4, h5, h6{
+	font-family:"hanaBFont" !important;    
+}
+
+strong, small{
+	font-family:"hanaBFont" !important;    
+}
+
+.doDivide{
+       
+        color:black;
+    }
+
+.doDivide:hover{
+        background-color:#008485;
+        color:#FFF;
+    }

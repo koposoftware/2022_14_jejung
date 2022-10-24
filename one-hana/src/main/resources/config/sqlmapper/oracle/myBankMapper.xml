@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myBank.MyBankDAO">
+
+	
+	
+	<!-- 1. finalChange 
+		 1) t_account 에서 accountName을 '마이원하나통장' 으로 update -->
+	<update id="updateAccount" parameterType="kr.ac.kopo.account.AccountVO"> <!-- 원랜 string -->
+		update t_account set accountName='마이원하나 통장' where accountNo=#{accountNo} AND ID=#{id}
+	</update>
+	
+	
+	<!-- 1. finalChange 
+		 2) t_mybank 에 고객정보 그대로 insert (balance는 basicBal로) -->
+	<insert id="insertNew" parameterType="kr.ac.kopo.account.AccountVO">
+	 	insert into t_myone(id, accountNo, balance) values(#{id}, #{accountNo}, #{balance}) 
+	</insert>
+	
+	
+	
+
+	<!-- 1. finalChange 
+		 3) changeSuccess.jsp에 전환 완료된 내서비스통장 정보 조회 뿌리기  -->
+    <select id="selectNew" resultType="kr.ac.kopo.myBank.MyBankVO" parameterType="kr.ac.kopo.account.AccountVO">
+
+		select * from t_myone where accountNo=#{accountNo} AND ID=#{id}
+ 		 	
+    </select>
+
+
+	<!-- 2. showMain
+		 mybankMain.jsp에서 뿌려줄 전환 완료된 통장 정보 -->
+		<select id="selectSuccess" resultType="kr.ac.kopo.myBank.MyBankVO" parameterType="kr.ac.kopo.account.AccountVO">
+			select * from t_myone where accountNo=#{accountNo} AND ID=#{id}
+		</select>
+
+
+
+	
+    <!-- select * -->
+    <select id="getPocketList" resultType="kr.ac.kopo.myBank.PocketVO" parameterType="map">
+		select b.accountNo, b.pocketCode, b.pocketName, b.pocketDtl, b.balance 
+		  from T_ACCOUNT a, T_MYONE_POCKET b 
+		 where a.accountNo = b.accountNo 
+		   and a.id = #{id} 
+		   and b.accountNo = #{accountNo}
+    </select>
+    
+    
+	<insert id="insertPocketDetail" parameterType="map">
+		<!-- insert into T_MYONE_POCKET(accountNo, pocketCode, pocketName, pocketDtl, balance) 
+		values(#{accountNo}, SEQ_POCKET_CD.nextval, #{pocketName}, #{pocketDtl}, 0)	 -->
+		
+		insert into T_MYONE_POCKET(id, accountNo, pocketCode, pocketName, pocketDtl, balance) 
+        values(#{id}, #{accountNo}, SEQ_POCKET_CD.nextval, #{pocketName}, #{pocketDtl}, 0) 
+		
+	</insert>
+
+
+    <insert id="insertPockets" parameterType="kr.ac.kopo.myBank.MyBankVO">
+        INSERT ALL
+	    INTO T_MYONE_POCKET values(#{id}, #{accountNo}, 1, '기본', '모든 금액은 여기서 시작!', #{balance})
+	    INTO T_MYONE_POCKET values(#{id}, #{accountNo}, 2, '고정비', '숨만 쉬어도 빠져 나가는 돈이 얼마지?', 0)
+	    INTO T_MYONE_POCKET values(#{id}, #{accountNo}, 3, '생활비', '나의 한달 소비는 이 만큼만', 0)
+	    INTO T_MYONE_POCKET values(#{id}, #{accountNo}, 4, '파킹', '종잣돈 마련을 위해 야금야금', 0)
+	    SELECT * FROM DUAL
+    </insert>
+    
+    
+    
+
+</mapper>

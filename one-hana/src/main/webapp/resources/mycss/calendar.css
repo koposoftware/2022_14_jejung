@@ -1,0 +1,69 @@
+@charset "UTF-8";
+@font-face{
+	src : url("/resources/font/HanaB.ttf");
+	font-family:"hanaBFont";
+}
+@font-face{
+    src : url("/resources/font/Pretendard-ExtraBold.otf");
+    font-family:"Pretendard-ExtraBold";
+}
+
+
+#calendar{
+	font-family:"Pretendard-ExtraBold";
+	font-size:14px;
+	width:100%;
+}
+
+.fc-event-time{
+	display:none !important;
+}
+
+.fc-toolbar-title{
+	font-family:"hanaBFont" !important;   
+}
+
+
+/* 2022년 몇월 글씨 */
+.fc .fc-toolbar-title {
+    font-size: 30px;
+    margin: 0;
+    color: #005c5d   ;
+}
+
+
+/* 각각의 소비내역 글씨 */
+.fc-event-title {
+    color: #004243  ;
+    text-decoration: none;
+}  
+
+.fc .fc-button-primary {
+    color: var(--fc-button-text-color, #fff);
+    background-color: var(--fc-button-bg-color, #4da9aa);
+    border-color: var(--fc-button-border-color, #4da9aa);
+}
+
+.fc-button-primary:not(:disabled).fc-button-active {
+    color: var(--fc-button-text-color, #fff);
+    background-color: var(--fc-button-active-bg-color, #e68a8a);
+    border-color: var(--fc-button-active-border-color, #e68a8a);
+}
+
+.fc .fc-button-primary:disabled {
+    color: var(--fc-button-text-color, #fff);
+    background-color: var(--fc-button-bg-color, #e68a8a);
+    border-color: var(--fc-button-border-color, #e68a8a);
+}
+
+.fc .fc-button-primary:not(:disabled):active, .fc .fc-button-primary:not(:disabled).fc-button-active {
+    color: var(--fc-button-text-color, #fff);
+    background-color: var(--fc-button-active-bg-color, #e68a8a);
+    border-color: var(--fc-button-active-border-color, #e68a8a);
+}
+
+.fc-dayGridMonth-button {
+	 color: var(--fc-button-text-color, #fff);
+    background-color: var(--fc-button-active-bg-color, #e68a8a);
+    border-color: var(--fc-button-active-border-color, #e68a8a);
+}

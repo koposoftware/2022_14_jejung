@@ -107,7 +107,8 @@
 
 # 5. 시연 동영상 
 
-  <iframe width="424" height="238" src="https://www.youtube.com/embed/reOGfxYJre0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+ [![영상](img/mainPage.png)](https://youtu.be/r1HVrnodi14)
+
 
 <br><br><br>
  

@@ -47,7 +47,7 @@
 <br><br>
 
 # 2. 프로젝트 제안서
-[제안서PPT<img src="제안서.jpg"/>](/MyOneHANA_제안서.pdf)<br>
+[제안서PPT<img src="제안서.jpg"/>](/2260341019_정의정_제안서.pdf)<br>
 
 <br> <br> 
 

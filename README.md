@@ -118,7 +118,7 @@
 |연락처 | 이메일 | dmlwjd0202(@)naver.com|
 |자격증| 2021.12.01 | 사회조사분석사2급 (한국산업인력공단) |
 | | 2021.12.03 | ADsP ( 한국데이터산업진흥원 ) |
-| | 2022.05 | SQLD ( 한국데이터산업진흥원 ) |
+| | 2022.06.24 | SQLD ( 한국데이터산업진흥원 ) |
 |skill set| Frontend | HTML, CSS, Javascript |
 | | Backend | Java, Spring, Oracle|
 | | ETC | R 

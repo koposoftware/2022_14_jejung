@@ -107,7 +107,7 @@
 
 # 5. 시연 동영상 
 
- [![영상](img/영상메인.jpg)](https://youtu.be/r1HVrnodi14)
+[영상<img src="영상메인.jpg"/>](https://youtu.be/r1HVrnodi14)
 
 
 <br><br><br>

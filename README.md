@@ -103,7 +103,7 @@
    
   
 # 4. 발표 PPT
-[발표자료<img src="피피티메인.jpg"/>](/project.pptx)<br>
+[발표자료<img src="피피티메인창.jpg"/>](/project.pptx)<br>
 
 # 5. 시연 동영상 
 

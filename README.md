@@ -87,7 +87,7 @@
 
 
 ## 3-2. ERD
-<img src="진짜최종erd.jpg"/><br><br>
+<img src="최최최종erd.jpg"/><br><br>
 
 
 ## 3-3. 적용기술
